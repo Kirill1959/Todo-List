@@ -26,13 +26,14 @@
         </div>
       </div>
 
-      <!-- Фильтры и сортировка -->
+      <!-- Фильтры -->
       <div class="filters">
         <button class="filter-btn active" data-filter="all">Все</button>
         <button class="filter-btn" data-filter="active">Активные</button>
         <button class="filter-btn" data-filter="done">Выполненные</button>
       </div>
 
+      <!-- Сортировка -->
       <div class="sort-row">
         <span class="sort-label">Сортировка:</span>
         <select id="sortSelect">
@@ -45,12 +46,6 @@
 
       <!-- Список задач -->
       <ul id="taskList"></ul>
-
-      <!-- Кнопки очистки -->
-      <div class="action-btns">
-        <button class="action-btn danger" id="clearDoneBtn">🗑 Очистить выполненные</button>
-        <button class="action-btn neutral" id="clearAllBtn">✕ Очистить всё</button>
-      </div>
     </div>
 
     <!-- Фиксированная панель снизу -->
@@ -64,6 +59,10 @@
             maxlength="100"
           />
           <button id="addBtn">Добавить</button>
+        </div>
+        <div class="action-btns">
+          <button class="action-btn danger" id="clearDoneBtn">🗑 Очистить выполненные</button>
+          <button class="action-btn neutral" id="clearAllBtn">✕ Очистить всё</button>
         </div>
       </div>
     </div>
