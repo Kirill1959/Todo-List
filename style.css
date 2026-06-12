@@ -65,7 +65,7 @@ h1 {
 .filters {
   display: flex;
   gap: 8px;
-  margin-bottom: 16px;
+  margin-bottom: 12px;
 }
 
 .filter-btn {
@@ -93,6 +93,37 @@ h1 {
   color: white;
 }
 
+/* --- Сортировка --- */
+.sort-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.sort-label {
+  font-size: 0.83rem;
+  color: #999;
+  white-space: nowrap;
+}
+
+#sortSelect {
+  flex: 1;
+  padding: 7px 12px;
+  border: 2px solid #e0e0e0;
+  border-radius: 10px;
+  font-size: 0.83rem;
+  color: #333;
+  outline: none;
+  cursor: pointer;
+  background: #fff;
+  transition: border-color 0.2s;
+}
+
+#sortSelect:focus {
+  border-color: #6c63ff;
+}
+
 /* --- Список задач --- */
 #taskList {
   list-style: none;
@@ -100,6 +131,7 @@ h1 {
   flex-direction: column;
   gap: 10px;
   min-height: 60px;
+  margin-bottom: 20px;
 }
 
 .task-item {
@@ -110,13 +142,12 @@ h1 {
   background: #f8f9ff;
   border-radius: 10px;
   border: 1px solid #ebebf5;
-  transition: opacity 0.2s, background 0.2s;
   animation: slideIn 0.2s ease;
 }
 
 @keyframes slideIn {
   from { opacity: 0; transform: translateY(-6px); }
-  to { opacity: 1; transform: translateY(0); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
 .task-item.done {
@@ -137,7 +168,6 @@ h1 {
   font-size: 0.95rem;
   color: #333;
   word-break: break-word;
-  transition: color 0.2s;
 }
 
 .task-item.done .task-text {
@@ -170,6 +200,45 @@ h1 {
   padding: 20px 0;
 }
 
+/* --- Кнопки действий --- */
+.action-btns {
+  display: flex;
+  gap: 10px;
+}
+
+.action-btn {
+  flex: 1;
+  padding: 10px 12px;
+  border-radius: 10px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: center;
+}
+
+.action-btn.danger {
+  background: #fff0f0;
+  border: 2px solid #ffcccc;
+  color: #e74c3c;
+}
+
+.action-btn.danger:hover {
+  background: #ffe0e0;
+  border-color: #e74c3c;
+}
+
+.action-btn.neutral {
+  background: #f5f5f5;
+  border: 2px solid #e0e0e0;
+  color: #888;
+}
+
+.action-btn.neutral:hover {
+  background: #ebebeb;
+  border-color: #bbb;
+}
+
 /* --- Фиксированная панель снизу --- */
 .bottom-bar {
   position: fixed;
@@ -186,9 +255,6 @@ h1 {
 .bottom-bar-inner {
   max-width: 520px;
   margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
 }
 
 .input-area {
@@ -205,6 +271,7 @@ h1 {
   color: #333;
   outline: none;
   transition: border-color 0.2s;
+  min-width: 0;
 }
 
 .input-area input:focus {
@@ -226,63 +293,15 @@ h1 {
   cursor: pointer;
   transition: background 0.2s, transform 0.1s;
   white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .input-area button:hover { background: #574fd6; }
 .input-area button:active { transform: scale(0.97); }
 
-.bottom-actions {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-#taskCount {
-  font-size: 0.83rem;
-  color: #999;
-}
-
-.danger-btns {
-  display: flex;
-  gap: 12px;
-}
-
-.clear-btn {
-  background: none;
-  border: none;
-  font-size: 0.83rem;
-  cursor: pointer;
-  padding: 4px 8px;
-  border-radius: 6px;
-  transition: background 0.2s;
-}
-
-#clearDoneBtn { color: #e74c3c; }
-#clearDoneBtn:hover { background: #ffeaea; }
-
-#clearAllBtn { color: #888; }
-#clearAllBtn:hover { background: #f0f0f0; }
-
 @media (max-width: 480px) {
-  .bottom-bar {
-    padding: 10px 12px;
-  }
-
   .input-area button {
     padding: 12px 14px;
     font-size: 0.85rem;
-  }
-
-  .bottom-actions {
-    flex-wrap: wrap;
-    gap: 4px;
-  }
-
-  .danger-btns {
-    gap: 8px;
-  }
-
-  .clear-btn {
-    font-size: 0.78rem;
   }
 }
