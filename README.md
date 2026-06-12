@@ -47,4 +47,4 @@ https://todo-list-alpha-steel.vercel.app
 
 ## 📸 Демонстрация
 
-<video controls src="https://github.com/Kirill1959/Todo-List/blob/main/%D0%92%D0%B8%D0%B4%D0%B5%D0%BE.mp4" title="Видео"></video>
+[Смотреть демо видео](https://github.com/Kirill1959/Todo-List/blob/main/%D0%92%D0%B8%D0%B4%D0%B5%D0%BE.mp4)
