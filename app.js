@@ -79,6 +79,7 @@ function renderTasks() {
       const li = document.createElement('li');
       li.className = 'task-item' + (task.done ? ' done' : '');
       li.innerHTML = `
+        <span class="task-num">${sorted.indexOf(task) + 1}</span>
         <input type="checkbox" ${task.done ? 'checked' : ''} />
         <span class="task-text">${escapeHTML(task.text)}</span>
         <button class="delete-btn" title="Удалить">✕</button>

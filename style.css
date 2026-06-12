@@ -170,6 +170,15 @@ h1 {
   line-height: 1;
 }
 
+.task-num {
+  font-size: 0.8rem;
+  color: #bbb;
+  font-weight: 600;
+  min-width: 18px;
+  text-align: right;
+  flex-shrink: 0;
+}
+
 .delete-btn:hover { color: #e74c3c; background: #ffeaea; }
 
 .empty-msg {
