@@ -1,28 +1,26 @@
 // =============================
 //  Данные
 // =============================
-
-// Загружаем задачи из localStorage, если они там есть
 let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
-
-// Текущий фильтр: 'all' | 'active' | 'done'
 let currentFilter = 'all';
 
 // =============================
-//  Ссылки на элементы страницы
+//  Элементы страницы
 // =============================
-
-const taskInput   = document.getElementById('taskInput');
-const addBtn      = document.getElementById('addBtn');
-const taskList    = document.getElementById('taskList');
-const taskCount   = document.getElementById('taskCount');
+const taskInput    = document.getElementById('taskInput');
+const addBtn       = document.getElementById('addBtn');
+const taskList     = document.getElementById('taskList');
+const taskCount    = document.getElementById('taskCount');
 const clearDoneBtn = document.getElementById('clearDoneBtn');
-const filterBtns  = document.querySelectorAll('.filter-btn');
+const clearAllBtn  = document.getElementById('clearAllBtn');
+const filterBtns   = document.querySelectorAll('.filter-btn');
+const statTotal    = document.getElementById('statTotal');
+const statActive   = document.getElementById('statActive');
+const statDone     = document.getElementById('statDone');
 
 // =============================
-//  Сохранение в localStorage
+//  Сохранение
 // =============================
-
 function saveTasks() {
   localStorage.setItem('tasks', JSON.stringify(tasks));
 }
@@ -30,28 +28,13 @@ function saveTasks() {
 // =============================
 //  Добавить задачу
 // =============================
-
 function addTask() {
   const text = taskInput.value.trim();
+  if (!text) { taskInput.focus(); return; }
 
-  // Не добавляем пустую задачу
-  if (!text) {
-    taskInput.focus();
-    return;
-  }
-
-  // Создаём объект задачи
-  const task = {
-    id: Date.now(),       // уникальный id — текущее время в мс
-    text: text,
-    done: false
-  };
-
-  tasks.push(task);
+  tasks.push({ id: Date.now(), text, done: false });
   saveTasks();
   renderTasks();
-
-  // Очищаем поле ввода
   taskInput.value = '';
   taskInput.focus();
 }
@@ -59,11 +42,8 @@ function addTask() {
 // =============================
 //  Переключить выполнение
 // =============================
-
 function toggleTask(id) {
-  tasks = tasks.map(task =>
-    task.id === id ? { ...task, done: !task.done } : task
-  );
+  tasks = tasks.map(t => t.id === id ? { ...t, done: !t.done } : t);
   saveTasks();
   renderTasks();
 }
@@ -71,76 +51,77 @@ function toggleTask(id) {
 // =============================
 //  Удалить задачу
 // =============================
-
 function deleteTask(id) {
-  tasks = tasks.filter(task => task.id !== id);
+  tasks = tasks.filter(t => t.id !== id);
   saveTasks();
   renderTasks();
 }
 
 // =============================
-//  Удалить все выполненные
+//  Очистить выполненные
 // =============================
-
 function clearDone() {
-  tasks = tasks.filter(task => !task.done);
+  tasks = tasks.filter(t => !t.done);
   saveTasks();
   renderTasks();
 }
 
 // =============================
-//  Отрисовка списка
+//  Очистить всё
 // =============================
-
-function renderTasks() {
-  // Фильтруем задачи по выбранной вкладке
-  let filtered;
-  if (currentFilter === 'active') {
-    filtered = tasks.filter(t => !t.done);
-  } else if (currentFilter === 'done') {
-    filtered = tasks.filter(t => t.done);
-  } else {
-    filtered = tasks;
+function clearAll() {
+  if (tasks.length === 0) return;
+  if (confirm('Удалить все задачи?')) {
+    tasks = [];
+    saveTasks();
+    renderTasks();
   }
+}
 
-  // Очищаем список
+// =============================
+//  Отрисовка
+// =============================
+function renderTasks() {
+  // Фильтр
+  let filtered;
+  if (currentFilter === 'active') filtered = tasks.filter(t => !t.done);
+  else if (currentFilter === 'done') filtered = tasks.filter(t => t.done);
+  else filtered = tasks;
+
+  // Список
   taskList.innerHTML = '';
-
-  // Если задач нет — показываем сообщение
   if (filtered.length === 0) {
     taskList.innerHTML = '<p class="empty-msg">Задач нет 🎉</p>';
   } else {
-    // Рисуем каждую задачу
     filtered.forEach(task => {
       const li = document.createElement('li');
       li.className = 'task-item' + (task.done ? ' done' : '');
-
       li.innerHTML = `
         <input type="checkbox" ${task.done ? 'checked' : ''} />
         <span class="task-text">${escapeHTML(task.text)}</span>
         <button class="delete-btn" title="Удалить">✕</button>
       `;
-
-      // Чекбокс — отметить выполненной
       li.querySelector('input').addEventListener('change', () => toggleTask(task.id));
-
-      // Кнопка удаления
       li.querySelector('.delete-btn').addEventListener('click', () => deleteTask(task.id));
-
       taskList.appendChild(li);
     });
   }
 
-  // Обновляем счётчик активных задач
-  const activeCount = tasks.filter(t => !t.done).length;
-  taskCount.textContent = `${activeCount} ${pluralize(activeCount, 'задача', 'задачи', 'задач')} осталось`;
+  // Статистика
+  const total  = tasks.length;
+  const done   = tasks.filter(t => t.done).length;
+  const active = total - done;
+
+  statTotal.textContent  = total;
+  statActive.textContent = active;
+  statDone.textContent   = done;
+
+  taskCount.textContent = `${active} ${pluralize(active, 'задача', 'задачи', 'задач')} осталось`;
 }
 
 // =============================
-//  Вспомогательные функции
+//  Вспомогательные
 // =============================
-
-// Защита от XSS — экранируем HTML-символы в тексте задачи
 function escapeHTML(str) {
   return str
     .replace(/&/g, '&amp;')
@@ -149,45 +130,32 @@ function escapeHTML(str) {
     .replace(/"/g, '&quot;');
 }
 
-// Склонение слова в зависимости от числа
 function pluralize(n, one, few, many) {
-  const mod10 = n % 10;
-  const mod100 = n % 100;
-  if (mod100 >= 11 && mod100 <= 19) return many;
-  if (mod10 === 1) return one;
-  if (mod10 >= 2 && mod10 <= 4) return few;
+  const m10 = n % 10, m100 = n % 100;
+  if (m100 >= 11 && m100 <= 19) return many;
+  if (m10 === 1) return one;
+  if (m10 >= 2 && m10 <= 4) return few;
   return many;
 }
 
 // =============================
-//  Обработчики событий
+//  События
 // =============================
-
-// Кнопка "Добавить"
 addBtn.addEventListener('click', addTask);
+taskInput.addEventListener('keydown', e => { if (e.key === 'Enter') addTask(); });
+clearDoneBtn.addEventListener('click', clearDone);
+clearAllBtn.addEventListener('click', clearAll);
 
-// Нажатие Enter в поле ввода
-taskInput.addEventListener('keydown', e => {
-  if (e.key === 'Enter') addTask();
-});
-
-// Кнопки фильтра
 filterBtns.forEach(btn => {
   btn.addEventListener('click', () => {
-    // Убираем active у всех кнопок
     filterBtns.forEach(b => b.classList.remove('active'));
-    // Добавляем active текущей
     btn.classList.add('active');
     currentFilter = btn.dataset.filter;
     renderTasks();
   });
 });
 
-// Очистить выполненные
-clearDoneBtn.addEventListener('click', clearDone);
-
 // =============================
-//  Первый запуск
+//  Старт
 // =============================
-
 renderTasks();

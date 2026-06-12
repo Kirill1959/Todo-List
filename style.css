@@ -9,92 +9,77 @@ body {
   background: #f0f2f5;
   min-height: 100vh;
   display: flex;
-  align-items: flex-start;
-  justify-content: center;
-  padding: 40px 16px;
+  flex-direction: column;
+  align-items: center;
+  padding: 24px 16px 100px 16px;
 }
 
 .container {
   background: #ffffff;
   border-radius: 16px;
   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
-  padding: 32px;
+  padding: 24px 20px;
   width: 100%;
   max-width: 520px;
 }
 
 h1 {
-  font-size: 1.8rem;
+  font-size: 1.6rem;
   color: #1a1a2e;
-  margin-bottom: 24px;
+  margin-bottom: 20px;
   font-weight: 700;
   letter-spacing: -0.5px;
 }
 
-/* --- Поле ввода --- */
-.input-area {
+/* --- Статистика --- */
+.stats {
   display: flex;
   gap: 10px;
-  margin-bottom: 16px;
+  margin-bottom: 20px;
 }
 
-.input-area input {
+.stat-card {
   flex: 1;
-  padding: 12px 16px;
-  border: 2px solid #e0e0e0;
-  border-radius: 10px;
-  font-size: 0.95rem;
-  color: #333;
-  outline: none;
-  transition: border-color 0.2s;
+  background: #f8f9ff;
+  border: 1px solid #ebebf5;
+  border-radius: 12px;
+  padding: 12px 8px;
+  text-align: center;
 }
 
-.input-area input:focus {
-  border-color: #6c63ff;
+.stat-number {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #6c63ff;
+  line-height: 1;
+  margin-bottom: 4px;
 }
 
-.input-area input::placeholder {
-  color: #aaa;
-}
-
-.input-area button {
-  padding: 12px 20px;
-  background: #6c63ff;
-  color: white;
-  border: none;
-  border-radius: 10px;
-  font-size: 0.95rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background 0.2s, transform 0.1s;
-  white-space: nowrap;
-}
-
-.input-area button:hover {
-  background: #574fd6;
-}
-
-.input-area button:active {
-  transform: scale(0.97);
+.stat-label {
+  font-size: 0.75rem;
+  color: #999;
+  font-weight: 500;
 }
 
 /* --- Фильтры --- */
 .filters {
   display: flex;
   gap: 8px;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
 }
 
 .filter-btn {
-  padding: 7px 16px;
+  flex: 1;
+  padding: 8px 4px;
   border: 2px solid #e0e0e0;
   border-radius: 20px;
   background: transparent;
   color: #666;
-  font-size: 0.85rem;
+  font-size: 0.82rem;
   font-weight: 500;
   cursor: pointer;
   transition: all 0.2s;
+  text-align: center;
 }
 
 .filter-btn:hover {
@@ -130,14 +115,8 @@ h1 {
 }
 
 @keyframes slideIn {
-  from {
-    opacity: 0;
-    transform: translateY(-6px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(-6px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .task-item.done {
@@ -191,65 +170,95 @@ h1 {
   padding: 20px 0;
 }
 
-/* --- Футер --- */
-.footer {
+/* --- Фиксированная панель снизу --- */
+.bottom-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #ffffff;
+  border-top: 1px solid #f0f0f0;
+  box-shadow: 0 -4px 16px rgba(0,0,0,0.06);
+  padding: 12px 16px;
+  z-index: 100;
+}
+
+.bottom-bar-inner {
+  max-width: 520px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.input-area {
+  display: flex;
+  gap: 10px;
+}
+
+.input-area input {
+  flex: 1;
+  padding: 12px 16px;
+  border: 2px solid #e0e0e0;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  color: #333;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.input-area input:focus {
+  border-color: #6c63ff;
+}
+
+.input-area input::placeholder {
+  color: #aaa;
+}
+
+.input-area button {
+  padding: 12px 20px;
+  background: #6c63ff;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+  white-space: nowrap;
+}
+
+.input-area button:hover { background: #574fd6; }
+.input-area button:active { transform: scale(0.97); }
+
+.bottom-actions {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 20px;
-  padding-top: 16px;
-  border-top: 1px solid #f0f0f0;
 }
 
 #taskCount {
-  font-size: 0.85rem;
+  font-size: 0.83rem;
   color: #999;
 }
 
-#clearDoneBtn {
+.danger-btns {
+  display: flex;
+  gap: 12px;
+}
+
+.clear-btn {
   background: none;
   border: none;
-  color: #e74c3c;
-  font-size: 0.85rem;
+  font-size: 0.83rem;
   cursor: pointer;
   padding: 4px 8px;
   border-radius: 6px;
   transition: background 0.2s;
 }
 
-#clearDoneBtn:hover {
-  background: #ffeaea;
-}
+#clearDoneBtn { color: #e74c3c; }
+#clearDoneBtn:hover { background: #ffeaea; }
 
-/* --- Мобильные устройства --- */
-@media (max-width: 480px) {
-  body {
-    padding: 16px 12px;
-  }
-
-  .container {
-    padding: 20px 16px;
-    border-radius: 12px;
-  }
-
-  h1 {
-    font-size: 1.4rem;
-  }
-
-  .input-area {
-    flex-direction: column;
-  }
-
-  .input-area button {
-    width: 100%;
-  }
-
-  .filters {
-    flex-wrap: wrap;
-  }
-
-  .filter-btn {
-    flex: 1;
-    text-align: center;
-  }
-}
+#clearAllBtn { color: #888; }
+#clearAllBtn:hover { background: #f0f0f0; }

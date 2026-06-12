@@ -10,27 +10,52 @@
     <div class="container">
       <h1>📝 Мои задачи</h1>
 
-      <div class="input-area">
-        <input
-          type="text"
-          id="taskInput"
-          placeholder="Введите новую задачу..."
-          maxlength="100"
-        />
-        <button id="addBtn">Добавить</button>
+      <!-- Статистика -->
+      <div class="stats">
+        <div class="stat-card">
+          <div class="stat-number" id="statTotal">0</div>
+          <div class="stat-label">Всего</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number" id="statActive">0</div>
+          <div class="stat-label">Активных</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number" id="statDone">0</div>
+          <div class="stat-label">Выполнено</div>
+        </div>
       </div>
 
+      <!-- Фильтры -->
       <div class="filters">
         <button class="filter-btn active" data-filter="all">Все</button>
         <button class="filter-btn" data-filter="active">Активные</button>
         <button class="filter-btn" data-filter="done">Выполненные</button>
       </div>
 
+      <!-- Список задач -->
       <ul id="taskList"></ul>
+    </div>
 
-      <div class="footer">
-        <span id="taskCount">0 задач осталось</span>
-        <button id="clearDoneBtn">Очистить выполненные</button>
+    <!-- Фиксированная панель снизу -->
+    <div class="bottom-bar">
+      <div class="bottom-bar-inner">
+        <div class="input-area">
+          <input
+            type="text"
+            id="taskInput"
+            placeholder="Введите новую задачу..."
+            maxlength="100"
+          />
+          <button id="addBtn">Добавить</button>
+        </div>
+        <div class="bottom-actions">
+          <span id="taskCount">0 задач осталось</span>
+          <div class="danger-btns">
+            <button class="clear-btn" id="clearDoneBtn">Очистить выполненные</button>
+            <button class="clear-btn" id="clearAllBtn">Очистить всё</button>
+          </div>
+        </div>
       </div>
     </div>
 
