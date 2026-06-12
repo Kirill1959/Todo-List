@@ -28,7 +28,7 @@
 
 ## 🚀 Деплой
 
-> Ссылка появится после деплоя на Vercel
+https://todo-list-alpha-steel.vercel.app
 
 ---
 
