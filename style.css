@@ -262,3 +262,27 @@ h1 {
 
 #clearAllBtn { color: #888; }
 #clearAllBtn:hover { background: #f0f0f0; }
+
+@media (max-width: 480px) {
+  .bottom-bar {
+    padding: 10px 12px;
+  }
+
+  .input-area button {
+    padding: 12px 14px;
+    font-size: 0.85rem;
+  }
+
+  .bottom-actions {
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+
+  .danger-btns {
+    gap: 8px;
+  }
+
+  .clear-btn {
+    font-size: 0.78rem;
+  }
+}
